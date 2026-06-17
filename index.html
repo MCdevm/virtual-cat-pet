@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🐱 น้องแมวเสมือนจริง – Virtual Cat Pet</title>
+  <meta name="description" content="เกมเลี้ยงแมวเสมือนจริง ตั้งชื่อ เลือกสีขน ให้อาหาร และเล่นกับน้องแมวของคุณ" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== SCREEN 1: CREATION ===== -->
+  <div id="screen-creation" class="screen active">
+    <div class="creation-wrapper">
+      <div class="creation-card glass-card">
+        <div class="creation-header">
+          <div class="paw-icon">🐾</div>
+          <h1>ยินดีต้อนรับ!</h1>
+          <p class="subtitle">สร้างน้องแมวของคุณเองได้เลย ✨</p>
+        </div>
+
+        <!-- Preview Cat -->
+        <div class="cat-preview-container">
+          <div id="preview-cat" class="cat-body preview-mode">
+            <div class="cat-ear left-ear"><div class="inner-ear"></div></div>
+            <div class="cat-ear right-ear"><div class="inner-ear"></div></div>
+            <div class="cat-face">
+              <div class="cat-eyes">
+                <div class="eye left-eye"><div class="pupil"></div></div>
+                <div class="eye right-eye"><div class="pupil"></div></div>
+              </div>
+              <div class="cat-nose"></div>
+              <div class="cat-mouth">
+                <div class="mouth-left"></div>
+                <div class="mouth-right"></div>
+              </div>
+              <div class="cat-whiskers">
+                <div class="whisker-group left-whiskers">
+                  <div class="whisker"></div>
+                  <div class="whisker"></div>
+                  <div class="whisker"></div>
+                </div>
+                <div class="whisker-group right-whiskers">
+                  <div class="whisker"></div>
+                  <div class="whisker"></div>
+                  <div class="whisker"></div>
+                </div>
+              </div>
+            </div>
+            <div class="cat-body-lower"></div>
+            <div class="cat-tail"></div>
+            <!-- Accessories overlay -->
+            <div id="preview-accessory" class="accessory-overlay"></div>
+          </div>
+        </div>
+
+        <!-- Name Input -->
+        <div class="form-group">
+          <label for="cat-name-input">ชื่อน้องแมว</label>
+          <input type="text" id="cat-name-input" placeholder="เช่น มูมู่, ออมสิน, พิกซี่…" maxlength="16" />
+        </div>
+
+        <!-- Color Picker -->
+        <div class="form-group">
+          <label>เลือกสีขน</label>
+          <div class="color-picker" id="color-picker">
+            <button class="color-btn active" data-color="orange" id="color-orange" title="ส้ม" aria-label="สีส้ม">
+              <span class="color-dot"></span>
+              <span class="color-label">ส้ม</span>
+            </button>
+            <button class="color-btn" data-color="gray" id="color-gray" title="เทา" aria-label="สีเทา">
+              <span class="color-dot"></span>
+              <span class="color-label">เทา</span>
+            </button>
+            <button class="color-btn" data-color="black" id="color-black" title="ดำ" aria-label="สีดำ">
+              <span class="color-dot"></span>
+              <span class="color-label">ดำ</span>
+            </button>
+            <button class="color-btn" data-color="cream" id="color-cream" title="ครีม" aria-label="สีครีม">
+              <span class="color-dot"></span>
+              <span class="color-label">ครีม</span>
+            </button>
+            <button class="color-btn" data-color="brown" id="color-brown" title="น้ำตาล" aria-label="สีน้ำตาล">
+              <span class="color-dot"></span>
+              <span class="color-label">น้ำตาล</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Button -->
+        <button class="btn-primary" id="btn-start" onclick="startGame()">
+          <span>พาน้องแมวกลับบ้าน</span>
+          <span class="btn-icon">🏠</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SCREEN 2: PET CARE ===== -->
+  <div id="screen-petcare" class="screen">
+    <div class="petcare-wrapper">
+
+      <!-- Top Bar -->
+      <header class="top-bar glass-card">
+        <div class="top-bar-left">
+          <span class="paw-icon-sm">🐾</span>
+          <h2 id="display-cat-name">น้องแมว</h2>
+        </div>
+        <div class="top-bar-right">
+          <div class="mood-badge" id="mood-badge">😊 แฮปปี้</div>
+          <button class="btn-icon-only" id="btn-reset" onclick="resetGame()" title="เริ่มใหม่">🔄</button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="petcare-main">
+
+        <!-- LEFT: Cat Display -->
+        <section class="cat-section glass-card">
+          <div class="cat-stage">
+            <div class="cat-environment">
+              <div class="env-elements">
+                <div class="env-floor"></div>
+                <div class="env-toy" id="env-toy">🧶</div>
+              </div>
+            </div>
+            <div id="main-cat" class="cat-body main-mode">
+              <div class="cat-ear left-ear"><div class="inner-ear"></div></div>
+              <div class="cat-ear right-ear"><div class="inner-ear"></div></div>
+              <div class="cat-face">
+                <div class="cat-eyes" id="cat-eyes">
+                  <div class="eye left-eye"><div class="pupil"></div></div>
+                  <div class="eye right-eye"><div class="pupil"></div></div>
+                </div>
+                <div class="cat-nose"></div>
+                <div class="cat-mouth" id="cat-mouth">
+                  <div class="mouth-left"></div>
+                  <div class="mouth-right"></div>
+                </div>
+                <div class="cat-whiskers">
+                  <div class="whisker-group left-whiskers">
+                    <div class="whisker"></div>
+                    <div class="whisker"></div>
+                    <div class="whisker"></div>
+                  </div>
+                  <div class="whisker-group right-whiskers">
+                    <div class="whisker"></div>
+                    <div class="whisker"></div>
+                    <div class="whisker"></div>
+                  </div>
+                </div>
+              </div>
+              <div class="cat-body-lower"></div>
+              <div class="cat-tail"></div>
+              <!-- Accessories overlay -->
+              <div id="main-accessory" class="accessory-overlay"></div>
+            </div>
+            <div class="cat-shadow"></div>
+            <!-- Floating reaction -->
+            <div id="reaction-bubble" class="reaction-bubble"></div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="action-btn feed-btn" id="btn-feed" onclick="feedCat()">
+              <span class="action-icon">🍣</span>
+              <span>ให้อาหาร</span>
+            </button>
+            <button class="action-btn play-btn" id="btn-play" onclick="playCat()">
+              <span class="action-icon">🧶</span>
+              <span>เล่นไหมพรม</span>
+            </button>
+            <button class="action-btn sleep-btn" id="btn-sleep" onclick="sleepCat()">
+              <span class="action-icon">😴</span>
+              <span>พักผ่อน</span>
+            </button>
+          </div>
+        </section>
+
+        <!-- RIGHT: Stats & Accessories -->
+        <aside class="stats-section">
+
+          <!-- Status Bars -->
+          <div class="stats-card glass-card">
+            <h3 class="stats-title">📊 สถานะน้องแมว</h3>
+
+            <div class="stat-item">
+              <div class="stat-label">
+                <span class="stat-icon">🍖</span>
+                <span>ความหิว</span>
+                <span class="stat-value" id="hunger-val">80%</span>
+              </div>
+              <div class="stat-bar-bg">
+                <div class="stat-bar hunger-bar" id="hunger-bar" style="width:80%"></div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-label">
+                <span class="stat-icon">💖</span>
+                <span>ความสุข</span>
+                <span class="stat-value" id="happiness-val">70%</span>
+              </div>
+              <div class="stat-bar-bg">
+                <div class="stat-bar happiness-bar" id="happiness-bar" style="width:70%"></div>
+              </div>
+            </div>
+
+            <div class="stat-item">
+              <div class="stat-label">
+                <span class="stat-icon">⚡</span>
+                <span>พลังงาน</span>
+                <span class="stat-value" id="energy-val">90%</span>
+              </div>
+              <div class="stat-bar-bg">
+                <div class="stat-bar energy-bar" id="energy-bar" style="width:90%"></div>
+              </div>
+            </div>
+
+            <div class="level-section">
+              <div class="level-badge">
+                <span class="level-icon">⭐</span>
+                <span id="level-text">Level 1</span>
+              </div>
+              <div class="exp-bar-bg">
+                <div class="exp-bar" id="exp-bar" style="width:0%"></div>
+              </div>
+              <div class="exp-label"><span id="exp-text">0 / 100 XP</span></div>
+            </div>
+          </div>
+
+          <!-- Accessory Panel -->
+          <div class="accessory-card glass-card">
+            <h3 class="stats-title">👗 แต่งตัวน้องแมว</h3>
+            <div class="accessory-list" id="accessory-list">
+
+              <label class="accessory-item" id="acc-none-label">
+                <input type="radio" name="accessory" value="none" id="acc-none" checked onchange="changeAccessory('none')" />
+                <div class="accessory-item-content">
+                  <span class="acc-icon">✨</span>
+                  <span class="acc-name">ไม่ใส่อะไร</span>
+                </div>
+              </label>
+
+              <label class="accessory-item" id="acc-wizard-label">
+                <input type="radio" name="accessory" value="wizard" id="acc-wizard" onchange="changeAccessory('wizard')" />
+                <div class="accessory-item-content">
+                  <span class="acc-icon">🧙</span>
+                  <span class="acc-name">หมวกพ่อมด</span>
+                </div>
+              </label>
+
+              <label class="accessory-item" id="acc-bow-label">
+                <input type="radio" name="accessory" value="bow" id="acc-bow" onchange="changeAccessory('bow')" />
+                <div class="accessory-item-content">
+                  <span class="acc-icon">🎀</span>
+                  <span class="acc-name">ปลอกคอโบว์</span>
+                </div>
+              </label>
+
+              <label class="accessory-item" id="acc-crown-label">
+                <input type="radio" name="accessory" value="crown" id="acc-crown" onchange="changeAccessory('crown')" />
+                <div class="accessory-item-content">
+                  <span class="acc-icon">👑</span>
+                  <span class="acc-name">มงกุฎ</span>
+                </div>
+              </label>
+
+              <label class="accessory-item" id="acc-glasses-label">
+                <input type="radio" name="accessory" value="glasses" id="acc-glasses" onchange="changeAccessory('glasses')" />
+                <div class="accessory-item-content">
+                  <span class="acc-icon">🕶️</span>
+                  <span class="acc-name">แว่นกันแดด</span>
+                </div>
+              </label>
+
+            </div>
+          </div>
+
+          <!-- Activity Log -->
+          <div class="log-card glass-card">
+            <h3 class="stats-title">📝 บันทึกกิจกรรม</h3>
+            <ul class="activity-log" id="activity-log">
+              <li class="log-item">🐱 น้องแมวมาถึงบ้านแล้ว!</li>
+            </ul>
+          </div>
+
+        </aside>
+      </main>
+    </div>
+  </div>
+
+  <!-- Game Over Overlay -->
+  <div id="gameover-overlay" class="overlay hidden">
+    <div class="overlay-card glass-card">
+      <div class="overlay-emoji">😿</div>
+      <h2>น้องแมวไม่สบาย…</h2>
+      <p id="gameover-msg">อย่าลืมดูแลน้องแมวด้วยนะ!</p>
+      <button class="btn-primary" onclick="resetGame()">
+        <span>เริ่มใหม่อีกครั้ง</span>
+        <span class="btn-icon">💖</span>
+      </button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
