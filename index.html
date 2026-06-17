@@ -5,6 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>🐱 น้องแมวเสมือนจริง – Virtual Cat Pet</title>
   <meta name="description" content="เกมเลี้ยงแมวเสมือนจริง ตั้งชื่อ เลือกสีขน ให้อาหาร และเล่นกับน้องแมวของคุณ" />
+  <!-- Unregister old Flutter service workers & clear stale caches -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => {
+        regs.forEach(reg => reg.unregister());
+      });
+      caches.keys().then(keys => keys.forEach(k => caches.delete(k)));
+    }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet" />
